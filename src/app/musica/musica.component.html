@@ -15,22 +15,46 @@
   </div>
   <div>
     <p>{{musica.gostar}}</p>
-    <button class="btn btn-success" (click)="this.disco.gostarMusica(musica)" *ngIf= "">Gostar</button> &nbsp;
+    <button class="btn btn-success" (click)="this.disco.gostarMusica(musica)">Gostar</button> &nbsp;
     <button class="btn btn-secondary" (click)="this.disco.naoGostarMusica(musica)">Não Gostar</button>
   </div>
   <br>
-  <h2>Sugestão</h2>
-  <section *ngIf="musica.gostar">
-    <span *ngFor="let dados of disco.listaDeMusicas()">
-      <a [routerLink]="['/musica', musica.id]" *ngIf="musica.genero.id === dados.genero.id">
 
-        <div>
-          <b>{{ dados.titulo }}</b>
-          <span *ngFor="let artista of dados.artista; last as ultimo">
-            {{artista.nome}} <span *ngIf="!ultimo">, </span>
-          </span>
-        </div>
-      </a>
+  <h2>Sugestão</h2>
+</section>
+
+<section *ngIf="musica.gostar">
+  <h3>Musicas com outros Artistas</h3>
+  <span *ngFor="let artista of musica.artistas">
+    <span *ngFor="let musica of disco.listaDeMusicasDoArtista(artista.nome)">
+      {{ musica.titulo }}
+      <span *ngFor="let genero of disco.listaDeGeneros()">
+        <span *ngIf="genero.nome === musica.genero.nome">
+          <p *ngFor="let musica of genero.musicas">
+            {{ musica.titulo }}
+          </p>
+        </span>
+      </span>
     </span>
-  </section>
+  </span>
+</section>
+<section *ngIf="musica.naoGostar">
+  <h3>Musicas com outros Artistas</h3>
+  <span *ngFor="let artista of musica.artistas">
+    <span *ngFor="let art of disco.listaDeArtistas()">
+      <span *ngIf="art.nome !== artista.nome">
+        <span *ngFor="let musica of disco.listaDeMusicasDoArtista(art.nome)">
+          {{ musica.titulo }}<br>
+        </span>
+      </span>
+    </span>
+  </span>
+  <h3>Musicas com Genero Diferente</h3>
+  <span *ngFor="let genero of disco.listaDeGeneros()">
+    <span *ngIf="genero.nome !== musica.genero.nome">
+      <div *ngFor="let musica of genero.musicas">
+        {{ musica.titulo }}
+      </div>
+    </span>
+  </span>
 </section>

@@ -129,7 +129,9 @@ export class DiscoService {
       id: this.musicas.length + 1,
       titulo,
       idGenero: g.id,
-      artistas: listaArtistas
+      artistas: listaArtistas,
+      gostar: 0,
+      naoGostar: 0
     };
     this.musicas.push(musica);
     return musica;
@@ -242,5 +244,14 @@ export class DiscoService {
       this.preencherObjetoArtista(artista);
     }
     return this.artistas;
+  }
+  gostarMusica(musica){
+    musica.gostar++;
+  }
+  naoGostarMusica(musica){
+    musica.naoGostar++;
+    if(musica.gostar > 0 ){
+      musica.gostar--;
+    }
   }
 }

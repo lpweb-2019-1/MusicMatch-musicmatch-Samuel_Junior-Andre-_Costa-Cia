@@ -27,10 +27,9 @@
         <div>
           <b>{{ dados.titulo }}</b>
           <span *ngFor="let artista of dados.artista; last as ultimo">
-            {{artista.nome}}
+            {{artista.nome}} <span *ngIf="!ultimo">, </span>
           </span>
         </div>
-      
       </a>
     </span>
   </section>

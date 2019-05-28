@@ -44,6 +44,29 @@ export class DiscoService {
     return this.generos.find(genero => genero.nome == nome);
   }
 
+  pesquisar(pesquisa) {
+    let busca = [];
+    for (let musica of this.musicas){
+      if (musica.titulo.indexOf(pesquisa) != -1){
+        musica.tipo = 'musica';
+        busca.push(musica);
+      }
+    }
+    for (let artista of this.artistas) {
+      if (artista.nome.indexOf(pesquisa) != -1) {
+        artista.tipo = 'artista';
+        busca.push(artista);
+      }
+    }
+    for (let aux of this.generos){
+      if (aux.nome.indexOf(pesquisa) != -1){
+        aux.tipo = 'genero';
+        busca.push(aux);
+      }
+    }
+    return busca;
+  }
+
   /**
    * Encontra e retorna um gênero da lista de gêneros.
    * 
@@ -236,7 +259,7 @@ export class DiscoService {
   }
 
   /**
-   * Retorna a lista de artistas e preenche o artibuto `musicas` com a lista das
+   * Retorna a lista de artistas e preenche o artibuto musicas` com a lista das
    * músicas dos respectivos artistas.
    */
   listaDeArtistas() {
@@ -253,5 +276,6 @@ export class DiscoService {
     if(musica.gostar > 0 ){
       musica.gostar--;
     }
+
   }
 }
